@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "mongodb": "^6.17.0"
+  },
+  "name": "presctice_namaste_node",
+  "version": "1.0.0",
+  "description": "nodeJs prectice ",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node src/app.js",
+    "dev":"nodemon src/app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "js"
+  ],
+  "author": "Arun kumar",
+  "license": "ISC"
+}
