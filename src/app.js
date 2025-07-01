@@ -1,12 +1,57 @@
+
 const express=require("express");
 const app=express();
 
+const {adminAuth,userAuth}=require("./middlewares/auth");
 
-app.use("/rount",[rh1,rh2,rh3]);
-app.use("/rount2",[rh1,rh2],rh3);
+
+
+// app.use("/rount",[rh1,rh2,rh3]);
+// app.use("/rount2",[rh1,rh2],rh3);
+
+app.use("/senior/employ",adminAuth);//thi is way second way to how to middlewares 
+app.use("/user",userAuth);
+
+app.use("/user",userAuth,(req,res)=>{//ase bhi ham userAuth Authentication laga skte h ;
+    res.send("this is user")
+})
+app.get("/senior/employ/getData",(req,res)=>{
+    res.send("token is valid for senior person");
+})
+
+app.use("/manager",(req,res,next)=>{
+    const token="abc";
+    const validToken=token=="abc";
+    if(!validToken){
+        res.status(401).send("user is not valid")
+    }
+    else{
+        next()
+    }
+
+})
+
+app.get("/manager/getAllData",(req,res)=>{
+    res.send("manager is valid");
+
+})
+
+
+app.get("/user/getAllData",(req,res)=>{
+
+const token="abcd";
+const adminToken=token=="abc";
+if(adminToken){
+    res.send("user is valid ")
+}
+else{
+    res.status(401).send("unathorized token");
+}
+
+})
 
 app.get("/next3",[(res,req,next)=>{
-    console.log("1")
+    console.log("1");
     next()
 },
 (req,res,next)=>{
