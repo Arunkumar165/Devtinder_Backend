@@ -21,5 +21,16 @@ http://localhost:3000/user?userId=102& password=kjkjk
 console.log(req.query)
 
 
+npm i mongoose
+
+npm i validator
+
+npm i bcrypt
+
+npm i cookie-parser
+
+npm i jsonwebtoken
+
+
 
 
