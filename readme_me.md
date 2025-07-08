@@ -75,7 +75,31 @@
 -  Set the Expiry of JWT token and cookies to 7 days ;
 -  Create userSchema method to getJWT()
 -  Create userSchema method to comparepassword(passwordInputUser);
--  
+
+-  Explore tinder APIs 
+-  Create a list all API you think of in Dev Tinder
+-  Group multiple routes under respective  routers
+-  Create routes folder for managing auth,profile,request routers
+-  Create authRouter,profileRouter,requestRouter
+-  Import these routers in app.js
+-  Create POST/logout API
+-  Create PATCH /profile/edit
+-  Create PATCH /profile/password API =>forgot password API
+-  Make you validate all data in every POST,PATCH apis
+
+
+-  Create Connection Request Schema;
+-  Send Connnection Request API;
+-  Proper Validation of data ;
+-  Think about All CornerCase ;
+-  $or query $and query in mongoose  
+-  schema.pre("save") function 
+-  Read More About index in MongoDB;
+-  why do we need index in DB?
+-  What is advantage and disadvantage of creating ?
+
+
+
 
 
 

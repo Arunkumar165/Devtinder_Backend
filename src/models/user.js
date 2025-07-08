@@ -45,13 +45,17 @@ const userSchema= new mongoose.Schema({
     },
     gender:{
         type:String,
-          validate(value){
-            if(!["male","female","others"].includes(value)){
-                throw new Error("Gender data is not vaalid ");//ye vala validation only hota h POST not in Update jha hamne findByIdAndUpdate h vha runValidators true karna pdega;
+        enum:{
+            values:["male","female","other"],
+            message:`{VALUE} is not valid`
+        }
+        //   validate(value){
+        //     if(!["male","female","others"].includes(value)){
+        //         throw new Error("Gender data is not vaalid ");//ye vala validation only hota h POST not in Update jha hamne findByIdAndUpdate h vha runValidators true karna pdega;
 
-            }
+        //     }
 
-          }
+        //   }
     },
     photoUrl:{
         type:String,
@@ -74,6 +78,8 @@ const userSchema= new mongoose.Schema({
 },{
     timestamps:true
 })
+   
+userSchema.index({firstName:1,lastName:1});//ye db me check accending and decending order ko show karta h .benefit of index database jab millions of name search karte h to rendomly so difficalt but acsending and  decending order is  so difficult
 
   userSchema.methods.getJWT=async function (){
             const user=this;

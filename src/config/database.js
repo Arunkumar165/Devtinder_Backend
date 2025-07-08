@@ -4,6 +4,10 @@ const connectDB=async ()=>{
     await mongoose.connect("mongodb+srv://Arun:mohan@arun.bewhyqa.mongodb.net/devTinder")
 
 }
+
+
+//devTinder.users.createIndex({ email: 1 }, { unique: true })
+
 module.exports=connectDB
 
 // connectDB()
