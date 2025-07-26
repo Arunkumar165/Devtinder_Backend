@@ -31,6 +31,6 @@ npm i cookie-parser
 
 npm i jsonwebtoken
 
-
+npm i cors
 
 

@@ -49,6 +49,7 @@ profileRouter.get("/profile/view", userAuth,async (req,res)=>{
 })
 
 profileRouter.patch("/profile/edit",userAuth,async (req,res)=>{
+    console.log("PATCH /profile/edit called");  // 🔍 Add this
 try{
 
    if(!validateEditProfileData(req)){

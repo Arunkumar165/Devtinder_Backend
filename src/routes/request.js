@@ -46,7 +46,7 @@ try{
       }
 
 
-      console.log(fromUserId,toUserId,status,"sssssssssssss")
+     // console.log(fromUserId,toUserId,status,"sssssssssssss")
       const connectionRequest=new ConnectionRequest({
         fromUserId,
         toUserId,
@@ -70,6 +70,61 @@ catch(err){
 }
     
     
+})
+
+requestRouter.post("/request/review/:status/:requestId",userAuth,async (req,res)=>{
+            //    Akshay (User A) sent a request to Elon (User B)
+
+            // Elon (logged in) visits /request/review/accepted/abc123
+
+            // This endpoint will find the request with id abc123, check if it was sent to Elon and still "interested"
+
+            // If all checks pass, it updates the request status to "accepted"
+
+                //             {
+                //   _id: "abc123",           // ← This is the unique ID of the connection request (not the user)
+                //   fromUserId: Akshay._id,  // Akshay's user ID
+                //   toUserId: Elon._id,      // Elon's user ID
+                //   status: "interested"
+                // }
+
+
+                         try{
+                                 const loggedInUser=req.user;
+                               //  console.log(loggedInUser,"fffffffffffffff")
+                                 const {status,requestId}=req.params;
+                                 const allowedStatus=["accepted","rejected"];
+                                 if(!allowedStatus.includes(status)){
+                                     return res.status(400).json({message:"Status is not allowed"});
+                                 }
+              
+                            const connectionRequest=await ConnectionRequest.findOne({
+                              _id:requestId,
+                              toUserId:loggedInUser._id,
+                              status:"interested"
+                            })                   
+                            if(!connectionRequest){
+                              
+                              return res
+                                     .status(404)
+                                     .json({message:"Connection Request not found"});
+
+                            }
+                            connectionRequest.status=status;
+
+                            const data=await connectionRequest.save(); 
+                            res.json({message:"Connection Request" + status,data})
+
+                              
+                               //validate the status;
+                               //Akshay=>Elon
+                               //loggedInId=toUserId
+                               //status=interested
+                               //request id should be valid
+                         }
+                         catch(err){
+                             res.status(400).send("ERROR",err.message);
+                         }
 })
 
 

@@ -9,7 +9,8 @@ const bcrypt=require("bcrypt");
 
 
 authRouter.post("/signup",async (req,res)=>{
-     console.log(req.body)
+  
+    // console.log(req.body)
    
      try{
    
@@ -21,7 +22,7 @@ authRouter.post("/signup",async (req,res)=>{
       const {firstName,lastName,password,emailId}=req.body;
 
     const passwordHash= await bcrypt.hash(password,10)
-     console.log(passwordHash);
+    // console.log(passwordHash);
 //     const user=new User(req.body);//is valine line ko change kar diya 
    
    const user =new User({
@@ -31,8 +32,14 @@ authRouter.post("/signup",async (req,res)=>{
     password:passwordHash
    })
      
-          await user.save();
-          res.send("data is successfully addedd")
+     const savedUser=  await user.save();
+       const token=await savedUser.getJWT();
+     
+       res.cookie("token",token,{expires:new Date(Date.now()+8*3600000)})
+
+
+     
+          res.json({message:"data is successfully addedd",data : savedUser})
      }
      catch(err){
           if (err.code === 11000 && err.keyPattern && err.keyPattern.emailId) {
@@ -74,7 +81,8 @@ authRouter.post("/login",async (req,res)=>{
 
 
 
-          res.send("Login Successfully");
+         // res.send("Login Successfully");
+          res.send(user);
     }
     else{
         throw new Error("Password is not correct ")//never say email is not correct this is leak information alwayas invalid creadentials

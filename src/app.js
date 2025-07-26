@@ -3,13 +3,38 @@ const express=require("express");
 const app=express();
 const User = require("./models/user"); // ✅ ADD THIS LINE
 
+
 //const User=require("./models/user");
 const connectDB=require("./config/database");
 //const {validateSignUpData}=require("./utils/validation");
 //const bcrypt=require("bcrypt");
 const cookieParser=require("cookie-parser");
 //const jwt=require("jsonwebtoken");
+const cors=require("cors");
 
+
+app.use(cors({
+  origin: "http://localhost:5173", // 🔁 change this to your React app's port
+  credentials: true               // ✅ allows cookies/auth headers if needed
+}));
+
+//-----------
+// app.options("*", cors()); // 👈 fixes the crash
+// app.options("*", cors({
+//   origin: "http://localhost:5173",
+//   credentials: true
+// })); // 👈 handles preflight requests globally
+
+//-------------------------------------
+// const corsOptions = {
+//   origin: "http://localhost:5173",
+//   credentials: true,
+//   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+// };
+
+// app.use(cors(corsOptions));
+// app.options("/", cors(corsOptions)); // 👈 Handles all preflight requests
 
 app.use(express.json());//middlewared read req.body
 app.use(cookieParser());//middilewarred read req.cookie
@@ -17,10 +42,13 @@ app.use(cookieParser());//middilewarred read req.cookie
 const authRouter=require("./routes/auth");
 const profileRouter=require("./routes/profile");
 const requestRouter=require("./routes/request");
+const userRouter=require("./routes/user");
+
 
 app.use("/",authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
+app.use("/",userRouter);
 
 connectDB()
 .then( async ()=>{    

@@ -10,8 +10,8 @@ const userSchema= new mongoose.Schema({
     firstName:{
         type:String,
  
-        minLength:4,
-        maxLength:10
+        // minLength:4,
+        // maxLength:10
     },
     lastName:{
         type:String,
@@ -60,12 +60,12 @@ const userSchema= new mongoose.Schema({
     photoUrl:{
         type:String,
         default:"https://gimgs2.nohat.cc/thumb/f/640/flat-person-icon-download-dummy-man--m2i8d3i8N4d3N4K9.jpg",
-               validate(value){
-                   if(!validator.isURL(value) ){
-                    throw new Error("this is invalid url ")
+        //        validate(value){
+        //            if(!validator.isURL(value) ){
+        //             throw new Error("this is invalid url ")
 
-                   }
-          }
+        //            } //valid url means http,and https is valid url 
+        //   }
     },
     about:{
        type:String,
